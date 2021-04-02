@@ -7,6 +7,9 @@ const app = Vue.createApp({
       confirmedName: ''
     };
   },
+  computed:{
+
+  },
   methods: {
     confirm(){
       this.confirmedName = this.name;
@@ -30,3 +33,5 @@ const app = Vue.createApp({
 });
 
 app.mount('#events');
+
+//vbind vs v on
