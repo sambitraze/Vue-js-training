@@ -27,6 +27,16 @@
       <ul v-else>
         <li v-for="(goal, index) in goals">{{ goal }} - {{ index }}</li>
       </ul>
+      <ul>
+        <li v-for="value in {name: 'Max', age: 10}">{{ value }}</li>
+      </ul>
+      <!-- can also get index for json -->
+      <ul>
+        <li v-for="(value, key) in {name: 'Max', age: 10}">{{ key }} : {{ value }}</li>
+      </ul>
+      <ul>
+        <li v-for="num in 5">{{ num }}</li>
+      </ul>
       <!-- v-show is faster --vshow for toggle other cases for v-if -->
       <!-- <p v-show="goals.length === 0">No goals have been added yet - please start adding some!</p>
       <ul v-show="goals.length > 0">
