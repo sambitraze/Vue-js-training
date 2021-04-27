@@ -5,6 +5,7 @@ const app = Vue.createApp({
       monsterHealth: 100,
       currentRound: 0,
       winner: null,
+      logMessages: [],
     };
   },
   watch: {
@@ -25,9 +26,15 @@ const app = Vue.createApp({
   },
   computed: {
     monsterBarStyle() {
+      if (this.monsterHealth < 0) {
+        return { width: "0%" };
+      }
       return { width: this.monsterHealth + "%" };
     },
     playerBarStyle() {
+      if (this.playerHealth < 0) {
+        return { width: "0%" };
+      }
       return { width: this.playerHealth + "%" };
     },
     mayUseSpecialAttack() {
@@ -35,20 +42,30 @@ const app = Vue.createApp({
     },
   },
   methods: {
+    startGame(){
+      this.playerHealth = 100;
+      this.monsterHealth = 100;
+      this.winner = null;
+      this.currentRound = 0;
+      this.logMessages = [];
+    },
     attackMonster() {
       this.currentRound++;
       const attackvalue = getRandomValue(5, 12);
       this.monsterHealth -= attackvalue;
+      this.addLogMessage('Player', 'attack', attackvalue);
       this.attackPlayer();
     },
     attackPlayer() {
       const attackvalue = getRandomValue(8, 15);
       this.playerHealth -= attackvalue;
+      this.addLogMessage('Monster', 'attack', attackvalue);
     },
     specialAttackMonster() {
       this.currentRound++;
       const attackvalue = getRandomValue(10, 25);
-      this.monsterHealth -= attackvalue;
+      this.monsterHealth -= attackvalue;      
+      this.addLogMessage('Player', 'Special Attack', attackvalue);
       this.attackPlayer();
     },
     healPlayer() {
@@ -58,9 +75,20 @@ const app = Vue.createApp({
         this.playerHealth = 100;
       } else {
         this.playerHealth += healValue;
-      }
+      }      
+      this.addLogMessage('Player', 'heal', healValue);
       this.attackPlayer();
     },
+    surrender(){
+      this.winner = "Monster";
+    },
+    addLogMessage(who,what,value){
+      this.logMessages.inshift({
+        actionBy: who,
+        actionType: what,
+        actionValue: value
+      });
+    }
   },
 });
 
