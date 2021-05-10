@@ -83,7 +83,7 @@ const app = Vue.createApp({
       this.winner = "Monster";
     },
     addLogMessage(who,what,value){
-      this.logMessages.inshift({
+      this.logMessages.unshift({
         actionBy: who,
         actionType: what,
         actionValue: value
